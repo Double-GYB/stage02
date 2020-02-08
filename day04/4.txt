@@ -1,4 +1,12 @@
 
-登录　https://github.com/lvze0321/AID1912
+网页：　https://github.com/lvze0321/AID1912
 
-git  clone  https://github.com/lvze0321/AID1912.git
+Linux： git  clone  https://github.com/lvze0321/AID1912.git
+
+        git pull
+
+
+cookie:
+
+inet6 fe80:0000:0000:0000:080a:76cf:ab11:2d73
+      fe80::80a:76cf:ab11:2d73
