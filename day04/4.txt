@@ -3,10 +3,11 @@
 
 Linux： git  clone  https://github.com/lvze0321/AID1912.git
 
-        git pull
+       代码同步： git pull
 
 
 cookie:
 
 inet6 fe80:0000:0000:0000:080a:76cf:ab11:2d73
       fe80::80a:76cf:ab11:2d73
+
