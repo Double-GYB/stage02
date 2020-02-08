@@ -15,10 +15,16 @@ sockfd = socket() # 默认值就是tcp
 sockfd.connect(server_addr)
 
 # 发送接收消息
-data = input(">>")
-sockfd.send(data.encode())
-data = sockfd.recv(1024)
-print("From server:",data.decode())
+while True:
+    data = input(">>")
+    if not data:
+        break
+    sockfd.send(data.encode())
+    # 输入##表示退出
+    # if data == '##':
+    #     break
+    data = sockfd.recv(1024)
+    print("From server:",data.decode())
 
 sockfd.close()
 

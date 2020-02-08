@@ -15,18 +15,25 @@ sockfd.bind(("127.0.0.1",8888))
 sockfd.listen(3)
 
 # 处理客户端链接
-print("Waiting for connect..")
-connfd,addr = sockfd.accept()
-print("Connect from",addr)
+while True:
+    print("Waiting for connect..")
+    connfd,addr = sockfd.accept()
+    print("Connect from",addr)
 
-# 收发消息 (网络传输数据用字节串)
-data = connfd.recv(1024)
-print("Recv:",data.decode())
-n = connfd.send(b'Thanks')
-print("Send %d bytes"%n)
+    # 收发消息 (网络传输数据用字节串)
+    while True:
+        data = connfd.recv(1024)
+        if not data:
+            break
+        # 收到b"##"则退出
+        # if data == b"##":
+        #     break
+        print("Recv:",data.decode())
+        n = connfd.send(b'Thanks')
+        print("Send %d bytes"%n)
+    connfd.close()
 
 # 关闭套接字
-connfd.close()
 sockfd.close()
 
 
