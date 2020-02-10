@@ -8,6 +8,9 @@ import socket
 # 创建tcp套接字对象
 sockfd = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
+# 端口立即重用 (在bind之前)
+sockfd.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,True)
+
 # 绑定地址 ip: "localhost" "127.0.0.1"  "0.0.0.0"  "192.168.31.196"
 sockfd.bind(("127.0.0.1",8888))
 
