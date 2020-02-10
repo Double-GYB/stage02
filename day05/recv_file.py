@@ -9,7 +9,7 @@ from socket import *
 
 # 创造监听套接字
 s = socket()
-s.bind(('127.0.0.1',8888))
+s.bind(('127.0.0.1',8889))
 s.listen(3)
 
 # 等待客户端链接
@@ -23,7 +23,8 @@ f = open('gg.jpg','wb')
 # 循环接收写入
 while True:
     data = c.recv(1024)
-    if not data:
+    if data == "文件发送完毕".encode():
+        print("接收完成")
         break
     f.write(data)
 

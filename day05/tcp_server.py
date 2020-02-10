@@ -22,7 +22,7 @@ while True:
 
     # 收发消息 (网络传输数据用字节串)
     while True:
-        data = connfd.recv(1024)
+        data = connfd.recv(5)
         if not data:
             break
         # 收到b"##"则退出
