@@ -20,6 +20,7 @@ def request():
 
     # 防止客户端退出data等于空
     if not data:
+        c.close()
         return
 
     info = data.decode().split(' ')[1]
@@ -32,6 +33,7 @@ def request():
         data += "Content-Type:text/html\r\n"
         data += "\r\n"
         data += f.read()
+        f.close()
     else:
         data = "HTTP/1.1 404 Not Found\r\n"
         data += "Content-Type:text/html\r\n"
