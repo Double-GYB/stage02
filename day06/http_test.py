@@ -16,5 +16,20 @@ print("Connect from",addr)
 data = c.recv(2048)
 print(data.decode())
 
+# 发送数据给浏览器
+# data = """HTTP/1.1 404 Not Found
+# Content-Type:text/html
+#
+# Hello World
+# """
+
+data = "HTTP/1.1 200 OK\r\n"
+data += "Content-Type:text/html\r\n"
+data += "\r\n"
+data += "Hello world"
+
+
+c.send(data.encode())
+
 c.close()
 s.close()
