@@ -22,7 +22,7 @@ f = open('timg.jpeg','rb')
 while True:
     data = f.read(1024)
     if not data:
-        time.sleep(0.2)
+        time.sleep(0.2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         s.send("文件发送完毕".encode())
         break
     s.send(data)
