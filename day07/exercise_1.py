@@ -19,3 +19,18 @@ def fun2():
     time.sleep(3)
     print("结束第二件事")
 
+pid = os.fork()
+
+if pid < 0:
+    print("Error")
+elif pid == 0:
+    p = os.fork()
+    if p < 0:
+        print("Error")
+    elif p == 0: # 二级子进程
+        fun2()
+    else:       # 一级子进程
+        os._exit(0)
+else:
+    os.wait() # 等着处理僵尸
+    fun1()

@@ -4,6 +4,11 @@
 
 import os,sys
 import time
+import signal
+
+# 忽略子进程的退出行为
+signal.signal(signal.SIGCHLD,signal.SIG_IGN)
+
 
 pid = os.fork()
 
@@ -17,8 +22,8 @@ else:
     print("父进程")
 
     # 阻塞等待子进程退出，进行回收
-    pid,status = os.wait()
-    print("子进程PID：",pid)
-    print("子进程退出状态:",status/256) # 退出状态 * 256
+    # pid,status = os.wait()
+    # print("子进程PID：",pid)
+    # print("子进程退出状态:",status/256) # 退出状态 * 256
 
     input()
