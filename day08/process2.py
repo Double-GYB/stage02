@@ -19,6 +19,6 @@ def worker(sec,name):
 p = Process(target=worker,args=(2,),kwargs={'name':'Lily'})
 
 p.start()
-p.join(3)
+p.join()
 
 print("======================")
