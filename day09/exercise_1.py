@@ -16,7 +16,7 @@ from threading import Thread
 old_dir = input("要拷贝哪个目录：")
 
 if old_dir[-1] == '/':
-    old_dir = old_dir[0:len(old_dir) - 1]
+    old_dir = old_dir[:-1]
 new_dir = old_dir + '-备份'
 
 try:
