@@ -19,9 +19,14 @@ t = Thread(target=value)
 t.start()
 
 while True:
-    lock.acquire()
+    lock.acquire() # 上锁
     a += 1
     b += 1
-    lock.release()
+    lock.release() # 解锁
+
+    # with lock:  #上锁
+    #     a += 1
+    #     b += 1
+                # 语句块结束解锁
 
 t.join()
