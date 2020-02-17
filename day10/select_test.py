@@ -13,7 +13,12 @@ s.listen(3)
 
 sleep(5)
 print("监控IO")
-rs,ws,xs = select([f,s],[f],[])
+
+
+rs,ws,xs = select([f,s],[],[])
 print("rlist:",rs)
 print("wlist:",ws)
 print("xlist:",xs)
+
+
+
