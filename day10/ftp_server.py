@@ -24,8 +24,9 @@ class FTPServer(Thread):
     #  循环接收请求，分发任务
     def run(self):
         while True:
-            data = self.connfd.recv(1024)  # 接收请求
-            print(data)
+            data = self.connfd.recv(1024).decode()  # 接收请求
+            if not data or data == 'E':
+                return  # run函数结束对应线程即退出
 
 # 框架结构，启动函数
 def main():
