@@ -5,6 +5,7 @@ FTP 文件处理
 
 from socket import *
 from threading import Thread
+import os,time
 
 
 # 全局变量
@@ -12,6 +13,8 @@ HOST = '0.0.0.0'
 PORT = 8888
 ADDR = (HOST,PORT)
 
+# 文件库
+FTP = "/home/tarena/FTP/"
 
 
 # 处理客户端请求 (自定义线程类)
@@ -20,13 +23,30 @@ class FTPServer(Thread):
         self.connfd = connfd
         super().__init__()
 
+    # 处理文件列表
+    def list(self):
+        # 判断文件库是否为空
+        file_list = os.listdir(FTP)
+        if not file_list:
+            self.connfd.send("文件库为空".encode())
+            return
+        else:
+            self.connfd.send(b'OK')
+            time.sleep(0.1)
+
+        # 发送文件列表
+        data = '\n'.join(file_list)  # 将文件以\n拼接
+        self.connfd.send(data.encode())
+
 
     #  循环接收请求，分发任务
     def run(self):
         while True:
             data = self.connfd.recv(1024).decode()  # 接收请求
             if not data or data == 'E':
-                return  # run函数结束对应线程即退出
+                return   # run函数结束对应线程即退出
+            elif data == 'L':
+                self.list()
 
 # 框架结构，启动函数
 def main():

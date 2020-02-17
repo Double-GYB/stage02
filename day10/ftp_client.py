@@ -17,6 +17,19 @@ class FTPClient:
         self.sockfd.close()
         sys.exit("谢谢使用")
 
+    # 获取文件列表
+    def list(self):
+        self.sockfd.send(b'L') # 发送请求
+        # 等待回复
+        data = self.sockfd.recv(128).decode()
+        if data == 'OK':
+            # 接收文件列表
+            data = self.sockfd.recv(4096)
+            print(data.decode())
+        else:
+            print(data)  # 打印原因
+
+
 # 启动函数
 def main():
     # 链接服务端
@@ -38,6 +51,10 @@ def main():
         # 根据不同的输入进行不同的处理
         if cmd == 'quit':
             ftp.quit()
+        elif cmd == 'list':
+            ftp.list()
+        else:
+            print("请输入正确命令")
 
 if __name__ == '__main__':
     main()
