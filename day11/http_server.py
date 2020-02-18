@@ -11,7 +11,18 @@ class HTTPServer:
     def __init__(self,host='0.0.0.0',port=8000,dir=None):
         self.host = host
         self.port = port
+        self.address = (host,port)
         self.dir = dir
+        self.sockfd = socket()  # 套接字属性
+        self.sockfd.setblocking(False)
+        self.sockfd.bind(self.address)
+
+
+    # 启动服务
+    def serve_forever(self):
+        self.sockfd.listen(3)
+        print("Listen the port %d"%self.port)
+        # 使用IO多路服用处理客户端请求
 
 
 
