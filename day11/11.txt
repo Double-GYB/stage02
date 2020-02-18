@@ -11,3 +11,33 @@
            settimeout()
 
    IO 多路复用
+
+
+IO 多路复用方法总结
+
+select： 支持平台最多　windows  Linux Unix
+         最多支持的IO数量  1024
+         效率一般
+
+poll :  支持 Linux Unix
+        支持IO数量无上限
+        效率一般
+
+epoll ： 支持 Linux
+        支持IO数量无上限
+        效率较高
+             (1. epoll直接将关注IO放入操作系统空间，不用每次调用监控函数都提交一遍
+              2. epoll中操作系统得知哪个IO就绪会直接告知应用层，不需要应用层再遍历查找到底哪个就绪了)
+
+
+
+
+
+
+
+
+
+
+
+
+
