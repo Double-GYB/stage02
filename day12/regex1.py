@@ -1,5 +1,5 @@
 """
-regex.py  re模块功能演示
+regex1.py  re模块功能演示
 """
 
 import re
@@ -16,3 +16,20 @@ print(l)
 regex = re.compile(pattern)
 l = regex.findall(s,0,13)  # s[0:13] 作为匹配目标
 print(l)
+
+# 对目标字符串切割
+l = re.split(r':|,',s,2)
+print(l)
+
+
+# 替换匹配到的内容
+s = re.sub(r':','--',s,1)
+print(s)
+
+
+
+
+
+
+
+
