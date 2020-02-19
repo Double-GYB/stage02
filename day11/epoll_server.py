@@ -23,6 +23,7 @@ fdmap = {s.fileno():s}
 while True:
     print("等待IO发生....")
     events = ep.poll()
+    print(events)
     for fd,event in events:
         # 通过文件描述符值判定哪个IO就绪
         if fd == s.fileno():
@@ -32,14 +33,14 @@ while True:
             c.setblocking(False)
             ep.register(c,EPOLLIN|EPOLLERR|EPOLLET) # 设置为边缘出发
             fdmap[c.fileno()] = c # 维护字典，与register保持一直
-        # elif event & EPOLLIN:
-        #     # 有客户端发送消息
-        #     data = fdmap[fd].recv(1024).decode()
-        #     if not data:
-        #         ep.unregister(fd) # 取消关注
-        #         fdmap[fd].close()
-        #         del fdmap[fd]  # 从字典中删除
-        #         continue
-        #     print(data)
-        #     fdmap[fd].send(b'OK')
+        elif event & EPOLLIN:
+            # 有客户端发送消息
+            data = fdmap[fd].recv(1024).decode()
+            if not data:
+                ep.unregister(fd) # 取消关注
+                fdmap[fd].close()
+                del fdmap[fd]  # 从字典中删除
+                continue
+            print(data)
+            fdmap[fd].send(b'OK')
 

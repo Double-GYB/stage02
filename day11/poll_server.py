@@ -23,6 +23,7 @@ fdmap = {s.fileno():s}
 while True:
     print("等待IO发生....")
     events = p.poll()
+    print(events)
     for fd,event in events:
         # 通过文件描述符值判定哪个IO就绪
         if fd == s.fileno():
