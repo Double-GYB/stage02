@@ -17,3 +17,9 @@ author varchar(30) not null,
 publication varchar(50),
 price float,
 comment text);
+
+-- 插入数据操作
+insert into class_1 (name,age,sex) values ('Emma',12,'w');
+insert into interest values (1,'Emma','sing,dance','B+',16800.00,"骨骼惊奇，练舞奇才");
+insert into interest values (2,'Lily','dance','C',8800.00,"骨骼惊奇");
+
