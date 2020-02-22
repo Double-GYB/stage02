@@ -58,13 +58,39 @@ select * from marathon where birthday > '1990-01-01';
 练习3： 使用book表完成
 
 1. 将呐喊的价格改为45元
-2. 增加一个字段 出版日期 类型为 date 放在价格后面
-3. 修改所有老舍的作品出版日期为2016-10-1
-4. 修改所有人民文学出版社的图书作品出版日期为2018-1-1，但是老舍的不要改
-5. 删除所有在60元以上的图书
-7. 修改价格字段的数据类型为 decimal(5,2)
-8. 查找鲁迅写的 2017年以后出版的图书
+update book set price=45 where title ='呐喊';
 
+2. 增加一个字段 出版日期 类型为 date 放在价格后面
+alter table book add publication_time date after price;
+
+3. 修改所有老舍的作品出版日期为2016-10-1
+update book set publication_time='2016-10-1' where author = '老舍';
+
+4. 修改所有中国文学出版社的图书作品出版日期为2018-1-1，但是老舍的不要改
+update book set publication_time='2018-1-1'
+where publication='中国文学出版社' and author !='老舍';
+
+5. 删除所有在60元以上的图书
+delete from book where price > 60;
+
+6. 修改价格字段的数据类型为 decimal(5,2)
+alter table book modify price decimal(5,2);
+
+7. 查找鲁迅写的 2017年以后出版的图书
+select * from book where author='鲁迅' and publication_time >= "2017-01-01";
+
+
+-- 高级查询部分示例
+模糊查询
+select * from cls where name like '%m%';
+select * from cls where name like '___';
+
+正则表达式查询
+select * from cls where name regexp 'T.+';
+
+as 操作
+
+select name  姓名,age  年龄 from cls as c where c.score > 85;
 
 
 
