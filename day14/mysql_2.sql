@@ -139,11 +139,41 @@ values (1, '曹操', '男', '魏', 256, 63),
        (13, '吕蒙', '男', '吴', 330, 71);
 
 1. 查找所有蜀国人的信息，按照攻击力排名
+select *
+from sanguo
+where country = '蜀'
+order by attack desc;
+
 2. 将赵云的攻击力设置为360 防御力设置为70
+update sanguo
+set attack=360,defense=70
+where name = '赵云';
+
 3. 吴国英雄攻击力超过300的改为300 （最多改2个）
+update sanguo
+set attack = 300
+where country ='吴' and attack > 300
+limit 2;
+
 4. 查找攻击力超过200的魏国英雄名字和攻击力 并显示为 （姓名，攻击力）
+select name as 姓名,attack as 攻击力
+from sanguo
+where attack > 200 and country='魏'；
+
 5. 所有英雄的攻击力按照降序排序，如果攻击力相同则按照防御力降序排序
+select * from sanguo  order by attack desc,defense desc;
+
 6. 查找所有名字为3个字的英雄
+select * from sanguo  where name like '___';
+
 7. 找到比魏国最高攻击力的英雄还要高的蜀国英雄
+select * from sanguo where country='蜀' and
+attack > (select attack from sanguo  where country='魏' order by attack desc limit 1);
+
 8. 找到魏国防御力前2名的英雄
-9. 查找所有女性角色应用，同时查找所有男性角色英雄中攻击力少于250的
+select * from sanguo where country='魏' order by defense desc limit 2;
+
+9. 查找所有女性角色，同时查找所有男性角色英雄中攻击力少于250的
+select * from sanguo where gender='女'
+union
+select * from sanguo where gender='男' and attack < 250;
