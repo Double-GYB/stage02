@@ -177,3 +177,24 @@ select * from sanguo where country='魏' order by defense desc limit 2;
 select * from sanguo where gender='女'
 union
 select * from sanguo where gender='男' and attack < 250;
+
+聚合操作
+
+select avg(attack) as 平均攻击力,min(attack) as 最小攻击力 from sanguo;
+select country,gender,count(*) from sanguo group by country,gender;
+select country,count(id) as number from sanguo  where gender='男' group by country order by number desc limit 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

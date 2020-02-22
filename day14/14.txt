@@ -43,7 +43,8 @@
    insert into [tb] [col1,col2]  values (v1,v2),(v1,v2);
 
 
-
+作业 ： 1.  两天的语句熟练掌握
+       2.  复习下核心变成内容
 
 
 
