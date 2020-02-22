@@ -92,6 +92,22 @@ as 操作
 
 select name  姓名,age  年龄 from cls as c where c.score > 85;
 
+排序
+select * from cls order by age desc,score desc;
+
+限制
+select * from cls where sex='m' order by score desc limit 1;
+update cls set score = 96 where sex='w' limit 1;
+
+联合查询
+select name,age,sex from cls where sex='w' union all select name,age,score from cls;
+
+子查询
+select * from cls where score > (select score from cls where name = 'Tony');
+select 姓名,分数 from (select name as 姓名,age as 年龄,score as 分数 from cls where sex='w') as s where 分数 > 90 ;
+
+
+
 
 
 
