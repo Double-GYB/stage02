@@ -49,9 +49,33 @@ alter table person add constraint dept_fk foreign key (dept_id) references dept(
 
 alter table person add constraint dept_fk foreign key (dept_id) references dept(id) on delete set null on update set null;
 
-练习：  完成朋友圈表的建设
-用户信息   朋友圈内容  点赞评论内容
 
+-- 练习2：  完成朋友圈表的建设
+-- 用户信息   朋友圈内容  点赞评论内容
+create table user (
+id int primary key,
+name varchar(30),
+passwd char(64)
+);
+
+create table pyq(
+id int primary key,
+content text,
+time datetime,
+address text,
+u_id int,
+constraint u_fk1 foreign key (u_id) references user(id)
+);
+
+create table user_pyq (
+id int primary key,
+uid int,
+pid int,
+lk bit,
+comment text,
+constraint u_fk2 foreign key (uid) references user(id),
+constraint p_fk foreign key (pid) references pyq(id)
+);
 
 
 
