@@ -44,8 +44,13 @@ insert into person values
 (5,'Baron',24,'m',15000,'2019-3-29',5),
 (6,'Abby',30,'w',18000,'2018-11-3',3);
 
+级联动作
+alter table person add constraint dept_fk foreign key (dept_id) references dept(id) on delete cascade on update cascade;
 
+alter table person add constraint dept_fk foreign key (dept_id) references dept(id) on delete set null on update set null;
 
+练习：  完成朋友圈表的建设
+用户信息   朋友圈内容  点赞评论内容
 
 
 
