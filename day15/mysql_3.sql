@@ -24,3 +24,35 @@ select publication_time,avg(price) from book group by publication_time;
 索引示例
 
 create table index_test (id int primary key auto_increment,name varchar(20),index name_index(name));
+create  unique index name_index on index_test(name);
+
+
+外键关系
+
+insert into dept values
+(1,'技术部'),
+(2,'财务部'),
+(3,'销售部'),
+(4,'行政部'),
+(5,'市场部');
+
+insert into person values
+(1,'Lily',29,'w',20000,'2017-4-3',2),
+(2,'Tom',27,'m',16000,'2019-10-3',1),
+(3,'Joy',32,'m',34000,'2016-5-20',1),
+(4,'Emma',29,'w',12000,'2018-7-7',4),
+(5,'Baron',24,'m',15000,'2019-3-29',5),
+(6,'Abby',30,'w',18000,'2018-11-3',3);
+
+
+
+
+
+
+
+
+
+
+
+
+
