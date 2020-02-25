@@ -47,3 +47,23 @@ select c.name,c.sex,i.hobby from cls as c left join interest as i on c.name=i.na
 
 3 查看所有兴趣爱的信息，并且标注与其对应的同学
 select i.hobby,i.price,c.name from cls as c right join interest as i on c.name=i.name;
+
+
+视图操作
+create or replace view good_student as select * from cls where score>80;
+alter view good_student as select cls.name,cls.age,cls.sex,interest.hobby from cls left join interest on cls.name = interest.name;
+
+
+函数操作
+
+注意: 1. 函数内的select语句要么return 要么 赋值给变量
+     2. 函数最终return 一个值 而不是一堆值
+     3. 函数里如果有写操作语句则每次调用都会执行，所以慎用
+     4. 一个数据库中函数不能重名
+
+delimiter //
+create function st() returns int
+begin
+return (select score from cls order by score desc limit 1);
+end //
+delimiter ;
