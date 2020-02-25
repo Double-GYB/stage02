@@ -67,3 +67,32 @@ begin
 return (select score from cls order by score desc limit 1);
 end //
 delimiter ;
+
+
+delimiter //
+
+create function st4()
+returns int
+begin
+declare a int;
+declare b int;
+set a=(select score from cls where name='Lucy');
+select score from cls where name = 'Lily' into b;
+return a-b;
+end //
+
+delimiter ;
+
+
+存储过程
+delimiter //
+
+create procedure p_in(in num int)
+begin
+select num;
+set num=100;
+select num;
+end //
+
+delimiter ;
+
