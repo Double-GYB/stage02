@@ -37,3 +37,13 @@ foreign  key (sid)
 references stu(id)
 );
 
+
+关联查询练习 使用cls 和 interest
+1 学生对应的爱好和兴趣班的价格
+select cls.name,interest.hobby,interest.price from  cls inner join interest on cls.name=interest.name;
+
+2 查询所有班级学生信息，同时标注出哪些同学有什么样的兴趣爱好
+select c.name,c.sex,i.hobby from cls as c left join interest as i on c.name=i.name;
+
+3 查看所有兴趣爱的信息，并且标注与其对应的同学
+select i.hobby,i.price,c.name from cls as c right join interest as i on c.name=i.name;
