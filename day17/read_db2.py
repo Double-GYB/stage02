@@ -16,10 +16,17 @@ db = pymysql.connect(host = 'localhost',
 cur = db.cursor()
 
 # 输入一个名字查看他的信息
+# name = input("Name:")
+# sql = "select * from cls where name='%s';"%name
+# cur.execute(sql)
+# print(cur.fetchall())
+
+
+# 输入一个名字查看他的信息
 name = input("Name:")
-
-
-
+sql = "select * from cls where name=%s or score>%s;"
+cur.execute(sql,[name,90]) # 只传递数据参量，不传递关键字，表名 数据库名 字段名
+print(cur.fetchall())
 
 # 关闭游标和数据库
 cur.close()
