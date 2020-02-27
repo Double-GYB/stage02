@@ -369,7 +369,7 @@ insert <span class="token keyword">into</span> <span class="token function">scor
 <p>&#x521B;&#x5EFA;&#x4E00;&#x5F20;&#x603B;&#x603B;&#x8868;</p>
 <pre data-role="codeBlock" data-info class="language-"><code>create table total(
 select a.s_id as s_id,a.s_name as s_name,a.s_age as s_age,a.s_sex as s_sex,
-b.c_id as c_id,b.score as score,c.t_id as t_id,d.t_name as t_name
+b.c_id as c_id,b.score as score,c.t_id as t_id,c.c_name as c_name,d.t_name as t_name
 from student a
 left join
 score  b on a.s_id=b.s_id
