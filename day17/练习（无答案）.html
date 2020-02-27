@@ -278,46 +278,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>&#x753B;&#x51FA;ER&#x56FE;&#xFF0C;&#x5EFA;&#x7ACB;&#x8868;&#x7ED3;&#x6784;</li>
 </ul>
 </li>
-</ol>
-<pre data-role="codeBlock" data-info class="language-"><code>create table `&#x51FA;&#x7248;&#x793E;` (
-id int primary key auto_increment,
-&#x540D;&#x79F0; varchar(64),
-&#x521B;&#x520A;&#x65E5;&#x671F; date,
-&#x5730;&#x5740; text,
-&#x7535;&#x8BDD; char(16)
-);
-
-create table `&#x4F5C;&#x5BB6;`(
-id int primary key auto_increment,
-&#x59D3;&#x540D; varchar(32),
-&#x6027;&#x522B; char,
-&#x51FA;&#x751F;&#x65E5;&#x671F; date,
-&#x4F4F;&#x5740; text,
-&#x98CE;&#x683C; text
-);
-
-create table `&#x56FE;&#x4E66;`(
-id int primary key auto_increment,
-&#x4E66;&#x540D; varchar(30),
-&#x51FA;&#x7248;&#x65E5;&#x671F; date,
-&#x5B9A;&#x4EF7; decimal(5,2),
-a_id int,
-p_id int,
-constraint a_fk foreign key(a_id) references &#x4F5C;&#x5BB6;(id),
-constraint p_fk foreign key(p_id) references &#x51FA;&#x7248;&#x793E;(id)
-);
-
--- &#x51FA;&#x7248;&#x793E;--&#x4F5C;&#x5BB6;&#x5173;&#x7CFB;
-create table publication_author(
-author_id int not null,
-publication_id int not null,
-&#x7B7E;&#x7EA6;&#x65F6;&#x95F4; datetime default now(),
-primary  key(author_id,publication_id),
-constraint a_fk2 foreign key(author_id) references &#x4F5C;&#x5BB6;(id),
-constraint p_fk2 foreign key(publication_id) references &#x51FA;&#x7248;&#x793E;(id)
-);
-
-</code></pre><ol start="2">
 <li>
 <p>&#x4F7F;&#x7528;cls&#x8868;&#x5B8C;&#x6210;</p>
 <ul>
@@ -331,55 +291,38 @@ constraint p_fk2 foreign key(publication_id) references &#x51FA;&#x7248;&#x793E;
 </li>
 </ul>
 </li>
+<li>
+<p>&#x521B;&#x5EFA;school&#x6570;&#x636E;&#x5E93;</p>
+</li>
 </ol>
-<pre data-role="codeBlock" data-info class="language-"><code>create function st3(uid1 int,uid2 int)
-returns float
-begin
-set @val1=(select score from cls where id=uid1);
-set @val2=(select score from cls where id=uid2);
-set @r=@val1-@val2;
-return @r;
-end $$
+<pre data-role="codeBlock" data-info class="language-"><code>create database school;
+use school;
+</code></pre><p>&#x521B;&#x5EFA;&#x56DB;&#x5F20;&#x8868;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>create table student(
+    s_id varchar(10),
+    s_name varchar(20),
+    s_age date,
+    s_sex varchar(10)
+);
+
+create table course(
+    c_id varchar(10),
+    c_name varchar(20),
+    t_id varchar(10)
+);
 
 
+create table teacher (
+t_id varchar(10),
+t_name varchar(20)
+);
 
-create procedure get_age(in uid int,out num int)
-begin
-declare val int;
-select age from cls where id=uid into val;
-set num=val;
-end $$
-</code></pre><ol start="3">
-<li>&#x521B;&#x5EFA;school&#x6570;&#x636E;&#x5E93;</li>
-</ol>
-<pre data-role="codeBlock" data-info="php" class="language-php">create database school<span class="token punctuation">;</span>
-<span class="token keyword">use</span> <span class="token package">school</span><span class="token punctuation">;</span>
-</pre><p>&#x521B;&#x5EFA;&#x56DB;&#x5F20;&#x8868;</p>
-<pre data-role="codeBlock" data-info="cpp" class="language-cpp">create table <span class="token function">student</span><span class="token punctuation">(</span>
-    s_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    s_name <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    s_age date<span class="token punctuation">,</span>
-    s_sex <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-create table <span class="token function">course</span><span class="token punctuation">(</span>
-    c_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    c_name <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    t_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-create table <span class="token function">teacher</span> <span class="token punctuation">(</span>
-t_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-t_name <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-create table <span class="token function">score</span> <span class="token punctuation">(</span>
-    s_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    c_id <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    score <span class="token function">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><img src="./mysql.jpg" alt></p>
+create table score (
+    s_id varchar(10),
+    c_id varchar(10),
+    score varchar(10)
+);
+</code></pre><p><img src="./mysql.jpg" alt></p>
 <p>&#x5F80;&#x8868;&#x91CC;&#x63D2;&#x503C;</p>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp">insert <span class="token keyword">into</span> <span class="token function">student</span> <span class="token punctuation">(</span>s_id<span class="token punctuation">,</span> s_name<span class="token punctuation">,</span> s_age<span class="token punctuation">,</span> s_sex<span class="token punctuation">)</span>
 <span class="token function">values</span>  <span class="token punctuation">(</span><span class="token string">&apos;01&apos;</span> <span class="token punctuation">,</span> <span class="token string">&apos;&#x8D75;&#x96F7;&apos;</span> <span class="token punctuation">,</span> <span class="token string">&apos;1990-01-01&apos;</span> <span class="token punctuation">,</span> <span class="token string">&apos;&#x7537;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -424,156 +367,63 @@ insert <span class="token keyword">into</span> <span class="token function">scor
 <p><img src="https:////upload-images.jianshu.io/upload_images/18317213-950a7a4578b42f00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/646/format/webp" alt="img"></p>
 <p>&#x56DB;&#x5F20;&#x8868;</p>
 <p>&#x521B;&#x5EFA;&#x4E00;&#x5F20;&#x603B;&#x603B;&#x8868;</p>
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp">create table <span class="token function">total</span><span class="token punctuation">(</span>
-<span class="token keyword">select</span> a<span class="token punctuation">.</span>s_id <span class="token keyword">as</span> s_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>s_name <span class="token keyword">as</span> s_name<span class="token punctuation">,</span>a<span class="token punctuation">.</span>s_age <span class="token keyword">as</span> s_age<span class="token punctuation">,</span>a<span class="token punctuation">.</span>s_sex <span class="token keyword">as</span> s_sex<span class="token punctuation">,</span>
-b<span class="token punctuation">.</span>c_id <span class="token keyword">as</span> c_id<span class="token punctuation">,</span>b<span class="token punctuation">.</span>score <span class="token keyword">as</span> score<span class="token punctuation">,</span>c<span class="token punctuation">.</span>t_id <span class="token keyword">as</span> t_id<span class="token punctuation">,</span>d<span class="token punctuation">.</span>t_name <span class="token keyword">as</span> t_name
-<span class="token keyword">from</span> student a
-left <span class="token keyword">join</span>
-score  b on a<span class="token punctuation">.</span>s_id<span class="token operator">=</span>b<span class="token punctuation">.</span>s_id
-left <span class="token keyword">join</span>
-course c on b<span class="token punctuation">.</span>c_id<span class="token operator">=</span>c<span class="token punctuation">.</span>c_id
-left <span class="token keyword">join</span>
-teacher d on c<span class="token punctuation">.</span>t_id<span class="token operator">=</span>d<span class="token punctuation">.</span>t_id
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> total<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-8bce6e7e058f9f98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/390/format/webp" alt="img"></p>
+<pre data-role="codeBlock" data-info class="language-"><code>create table total(
+select a.s_id as s_id,a.s_name as s_name,a.s_age as s_age,a.s_sex as s_sex,
+b.c_id as c_id,b.score as score,c.t_id as t_id,d.t_name as t_name
+from student a
+left join
+score  b on a.s_id=b.s_id
+left join
+course c on b.c_id=c.c_id
+left join
+teacher d on c.t_id=d.t_id
+);
+select * from total;
+</code></pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-8bce6e7e058f9f98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/390/format/webp" alt="img"></p>
 <p>&#x5B66;&#x751F;&#x8BFE;&#x7A0B;&#x6210;&#x7EE9;&#x67E5;&#x8BE2;&#x603B;&#x8868;total</p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A201%E8%AF%BE%E7%A8%8B%E6%AF%9402%E8%AF%BE%E7%A8%8B%E6%88%90%E7%BB%A9%E9%AB%98%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E4%BF%A1%E6%81%AF%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%88%86%E6%95%B0">&#x67E5;&#x8BE2;&quot;01&quot;&#x8BFE;&#x7A0B;&#x6BD4;&quot;02&quot;&#x8BFE;&#x7A0B;&#x6210;&#x7EE9;&#x9AD8;&#x7684;&#x5B66;&#x751F;&#x7684;&#x4FE1;&#x606F;&#x53CA;&#x8BFE;&#x7A0B;&#x5206;&#x6570;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> a<span class="token punctuation">.</span>s_id <span class="token keyword">as</span> s_id<span class="token punctuation">,</span>score1<span class="token punctuation">,</span>score2 <span class="token keyword">from</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id<span class="token punctuation">,</span> score <span class="token keyword">as</span> score1 <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;01&apos;</span><span class="token punctuation">)</span> a
-inner <span class="token keyword">join</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id<span class="token punctuation">,</span> score <span class="token keyword">as</span> score2 <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;02&apos;</span><span class="token punctuation">)</span> b
-on a<span class="token punctuation">.</span>s_id<span class="token operator">=</span>b<span class="token punctuation">.</span>s_id
-<span class="token keyword">where</span> score1<span class="token operator">&gt;</span>score2<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-c3a67ad9ccfebc62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/147/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E60%E5%88%86%E7%9A%84%E5%90%8C%E5%AD%A6%E7%9A%84%E5%AD%A6%E7%94%9F%E7%BC%96%E5%8F%B7%E5%92%8C%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9">&#x67E5;&#x8BE2;&#x5E73;&#x5747;&#x6210;&#x7EE9;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;60&#x5206;&#x7684;&#x540C;&#x5B66;&#x7684;&#x5B66;&#x751F;&#x7F16;&#x53F7;&#x548C;&#x5B66;&#x751F;&#x59D3;&#x540D;&#x548C;&#x5E73;&#x5747;&#x6210;&#x7EE9;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> student<span class="token punctuation">.</span>s_id <span class="token keyword">as</span> s_id<span class="token punctuation">,</span>student<span class="token punctuation">.</span>s_name <span class="token keyword">as</span> s_name<span class="token punctuation">,</span>b<span class="token punctuation">.</span>avg_score <span class="token keyword">as</span> avg_score <span class="token keyword">from</span> student 
-right <span class="token keyword">join</span> 
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>score<span class="token punctuation">)</span> <span class="token keyword">as</span> avg_score <span class="token keyword">from</span> score
-<span class="token keyword">group</span> by s_id having avg_score<span class="token operator">&gt;</span><span class="token number">60</span><span class="token punctuation">)</span> b
-on student<span class="token punctuation">.</span>s_id<span class="token operator">=</span>b<span class="token punctuation">.</span>s_id<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-adca1d2eee84c917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/217/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E6%9D%8E%E5%A7%93%E8%80%81%E5%B8%88%E7%9A%84%E6%95%B0%E9%87%8F">&#x67E5;&#x8BE2;&quot;&#x674E;&quot;&#x59D3;&#x8001;&#x5E08;&#x7684;&#x6570;&#x91CF;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span>t_name<span class="token punctuation">)</span> <span class="token keyword">from</span> teacher
-<span class="token keyword">where</span> t_name like <span class="token string">&apos;&#x674E;%&apos;</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-d1729c0674b221c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/98/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%AD%A6%E8%BF%87%E5%BC%A0%E4%B8%89%E8%80%81%E5%B8%88%E6%8E%88%E8%AF%BE%E7%9A%84%E5%90%8C%E5%AD%A6%E7%9A%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x8BE2;&#x5B66;&#x8FC7;&quot;&#x5F20;&#x4E09;&quot;&#x8001;&#x5E08;&#x6388;&#x8BFE;&#x7684;&#x540C;&#x5B66;&#x7684;&#x4FE1;&#x606F;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> distinct s_id<span class="token punctuation">,</span>s_name<span class="token punctuation">,</span>s_age<span class="token punctuation">,</span>s_sex
-<span class="token keyword">from</span> total
-<span class="token keyword">where</span> t_name<span class="token operator">=</span><span class="token string">&apos;&#x5F20;&#x4E09;&apos;</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-c6cd46101c5ac159.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/218/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%AD%A6%E8%BF%87%E7%BC%96%E5%8F%B7%E4%B8%BA01%E5%B9%B6%E4%B8%94%E4%B9%9F%E5%AD%A6%E8%BF%87%E7%BC%96%E5%8F%B7%E4%B8%BA02%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%90%8C%E5%AD%A6%E7%9A%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x8BE2;&#x5B66;&#x8FC7;&#x7F16;&#x53F7;&#x4E3A;&quot;01&quot;&#x5E76;&#x4E14;&#x4E5F;&#x5B66;&#x8FC7;&#x7F16;&#x53F7;&#x4E3A;&quot;02&quot;&#x7684;&#x8BFE;&#x7A0B;&#x7684;&#x540C;&#x5B66;&#x7684;&#x4FE1;&#x606F;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student
-<span class="token keyword">where</span> s_id <span class="token keyword">in</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;01&apos;</span><span class="token punctuation">)</span>
-and s_id <span class="token keyword">in</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;02&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-f2f703ae1f8a0fe3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/216/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E9%97%A8%E8%AF%BE%E4%B8%8E%E5%AD%A6%E5%8F%B7%E4%B8%BA01%E7%9A%84%E5%90%8C%E5%AD%A6%E6%89%80%E5%AD%A6%E7%9B%B8%E5%90%8C%E7%9A%84%E5%90%8C%E5%AD%A6%E7%9A%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x8BE2;&#x81F3;&#x5C11;&#x6709;&#x4E00;&#x95E8;&#x8BFE;&#x4E0E;&#x5B66;&#x53F7;&#x4E3A;&quot;01&quot;&#x7684;&#x540C;&#x5B66;&#x6240;&#x5B66;&#x76F8;&#x540C;&#x7684;&#x540C;&#x5B66;&#x7684;&#x4FE1;&#x606F;</h1>
 
 <p>&#x601D;&#x8DEF;&#xFF1A;&#x5148;&#x627E;&#x51FA;&#x2018;01&#x2019;&#x540C;&#x5B66;&#x5B66;&#x8FC7;&#x7684;c_id&#xFF0C;&#x518D;&#x627E;&#x51FA;&#x5B66;&#x8FC7;&#x4EFB;&#x4E00;&#x95E8;&#x7684;s_id&#xFF0C;&#x518D;&#x6839;&#x636E;s_id&#x5728;student&#x627E;&#x5B66;&#x751F;&#x4FE1;&#x606F;&#x3002;</p>
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student
-<span class="token keyword">where</span> s_id <span class="token keyword">in</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> distinct s_id <span class="token keyword">from</span> score
-<span class="token keyword">where</span> c_id <span class="token keyword">in</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> c_id <span class="token keyword">from</span> score <span class="token keyword">where</span> s_id<span class="token operator">=</span><span class="token string">&apos;01&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-33c1477c3d5de007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/218/format/webp" alt="img"></p>
-<h1 class="mume-header" id="14-%E6%9F%A5%E8%AF%A2%E6%B2%A1%E5%AD%A6%E8%BF%87%E5%BC%A0%E4%B8%89%E8%80%81%E5%B8%88%E8%AE%B2%E6%8E%88%E7%9A%84%E4%BB%BB%E4%B8%80%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D">14&#x3001;&#x67E5;&#x8BE2;&#x6CA1;&#x5B66;&#x8FC7;&quot;&#x5F20;&#x4E09;&quot;&#x8001;&#x5E08;&#x8BB2;&#x6388;&#x7684;&#x4EFB;&#x4E00;&#x95E8;&#x8BFE;&#x7A0B;&#x7684;&#x5B66;&#x751F;&#x59D3;&#x540D;</h1>
+<h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E6%B2%A1%E5%AD%A6%E8%BF%87%E5%BC%A0%E4%B8%89%E8%80%81%E5%B8%88%E8%AE%B2%E6%8E%88%E7%9A%84%E4%BB%BB%E4%B8%80%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D">&#x67E5;&#x8BE2;&#x6CA1;&#x5B66;&#x8FC7;&quot;&#x5F20;&#x4E09;&quot;&#x8001;&#x5E08;&#x8BB2;&#x6388;&#x7684;&#x4EFB;&#x4E00;&#x95E8;&#x8BFE;&#x7A0B;&#x7684;&#x5B66;&#x751F;&#x59D3;&#x540D;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> s_id<span class="token punctuation">,</span>s_name <span class="token keyword">from</span> student
-<span class="token keyword">where</span> s_id not <span class="token keyword">in</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> distinct s_id <span class="token keyword">from</span> total
-<span class="token keyword">where</span> t_name<span class="token operator">=</span><span class="token string">&apos;&#x5F20;&#x4E09;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-e58bcf5ab7de6307.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/101/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%A3%80%E7%B4%A201%E8%AF%BE%E7%A8%8B%E5%88%86%E6%95%B0%E5%B0%8F%E4%BA%8E60%E6%8C%89%E5%88%86%E6%95%B0%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97%E7%9A%84%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF">&#x68C0;&#x7D22;&quot;01&quot;&#x8BFE;&#x7A0B;&#x5206;&#x6570;&#x5C0F;&#x4E8E;60&#xFF0C;&#x6309;&#x5206;&#x6570;&#x964D;&#x5E8F;&#x6392;&#x5217;&#x7684;&#x5B66;&#x751F;&#x4FE1;&#x606F;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> a<span class="token punctuation">.</span>s_id<span class="token punctuation">,</span>student<span class="token punctuation">.</span>s_name<span class="token punctuation">,</span>student<span class="token punctuation">.</span>s_age<span class="token punctuation">,</span>student<span class="token punctuation">.</span>s_sex<span class="token punctuation">,</span>a<span class="token punctuation">.</span>score <span class="token keyword">from</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id<span class="token punctuation">,</span>score <span class="token keyword">from</span> score
-<span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;01&apos;</span> and score<span class="token operator">&lt;</span><span class="token number">60</span>
-order by score desc<span class="token punctuation">)</span> a
-left <span class="token keyword">join</span> student on a<span class="token punctuation">.</span>s_id<span class="token operator">=</span>student<span class="token punctuation">.</span>s_id<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-2877562d15a1573e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/263/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E4%B8%8D%E5%90%8C%E8%80%81%E5%B8%88%E6%89%80%E6%95%99%E4%B8%8D%E5%90%8C%E8%AF%BE%E7%A8%8B%E5%B9%B3%E5%9D%87%E5%88%86%E4%BB%8E%E9%AB%98%E5%88%B0%E4%BD%8E%E6%98%BE%E7%A4%BA">&#x67E5;&#x8BE2;&#x4E0D;&#x540C;&#x8001;&#x5E08;&#x6240;&#x6559;&#x4E0D;&#x540C;&#x8BFE;&#x7A0B;&#x5E73;&#x5747;&#x5206;&#x4ECE;&#x9AD8;&#x5230;&#x4F4E;&#x663E;&#x793A;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> t_id<span class="token punctuation">,</span>t_name<span class="token punctuation">,</span>c_id<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>score<span class="token punctuation">)</span> <span class="token keyword">as</span> avg_score 
-<span class="token keyword">from</span> total
-<span class="token keyword">group</span> by t_id<span class="token punctuation">,</span>c_id
-order by avg_score desc<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-5abcf2b8717b6601.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/258/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%90%84%E7%A7%91%E6%88%90%E7%BB%A9%E5%89%8D%E4%B8%89%E5%90%8D%E7%9A%84%E8%AE%B0%E5%BD%95">&#x67E5;&#x8BE2;&#x5404;&#x79D1;&#x6210;&#x7EE9;&#x524D;&#x4E09;&#x540D;&#x7684;&#x8BB0;&#x5F55;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> a<span class="token punctuation">.</span>c_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>s_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>score 
-<span class="token keyword">from</span> score a 
-<span class="token keyword">where</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>s_id<span class="token punctuation">)</span> <span class="token keyword">from</span> score b <span class="token keyword">where</span> a<span class="token punctuation">.</span>c_id<span class="token operator">=</span>b<span class="token punctuation">.</span>c_id and a<span class="token punctuation">.</span>score<span class="token operator">&lt;</span>b<span class="token punctuation">.</span>score<span class="token punctuation">)</span><span class="token operator">&lt;</span><span class="token number">3</span> 
-<span class="token keyword">group</span> by a<span class="token punctuation">.</span>c_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>s_id<span class="token punctuation">;</span> 
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-33bb3e4aed33869f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/130/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E8%A2%AB%E9%80%89%E4%BF%AE%E7%9A%84%E5%AD%A6%E7%94%9F%E6%95%B0">&#x67E5;&#x8BE2;&#x6BCF;&#x95E8;&#x8BFE;&#x7A0B;&#x88AB;&#x9009;&#x4FEE;&#x7684;&#x5B66;&#x751F;&#x6570;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> c_id<span class="token punctuation">,</span><span class="token function">count</span><span class="token punctuation">(</span>s_id<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">&apos;&#x9009;&#x4FEE;&#x4EBA;&#x6570;&apos;</span> 
-<span class="token keyword">from</span> score <span class="token keyword">group</span> by c_id<span class="token punctuation">;</span> 
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-1c780a685f823316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/113/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%87%BA%E5%8F%AA%E6%9C%89%E4%B8%A4%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%85%A8%E9%83%A8%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%E5%92%8C%E5%A7%93%E5%90%8D">&#x67E5;&#x8BE2;&#x51FA;&#x53EA;&#x6709;&#x4E24;&#x95E8;&#x8BFE;&#x7A0B;&#x7684;&#x5168;&#x90E8;&#x5B66;&#x751F;&#x7684;&#x5B66;&#x53F7;&#x548C;&#x59D3;&#x540D;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> student<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">from</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> s_id <span class="token keyword">from</span> score
-<span class="token keyword">group</span> by s_id having <span class="token function">count</span><span class="token punctuation">(</span>c_id<span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span> a
-left <span class="token keyword">join</span> student on a<span class="token punctuation">.</span>s_id<span class="token operator">=</span>student<span class="token punctuation">.</span>s_id<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-7793f59153897a27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/218/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E7%94%B7%E7%94%9F-%E5%A5%B3%E7%94%9F%E4%BA%BA%E6%95%B0">&#x67E5;&#x8BE2;&#x7537;&#x751F;&#x3001;&#x5973;&#x751F;&#x4EBA;&#x6570;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> s_sex <span class="token keyword">as</span> <span class="token string">&apos;&#x6027;&#x522B;&apos;</span><span class="token punctuation">,</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">&apos;&#x4EBA;&#x6570;&apos;</span>
-<span class="token keyword">from</span> student <span class="token keyword">group</span> by s_sex<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-b0f02d47f09d5804.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/87/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%90%8D%E5%AD%97%E4%B8%AD%E5%90%AB%E6%9C%89%E9%A3%8E%E5%AD%97%E7%9A%84%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF">&#x67E5;&#x8BE2;&#x540D;&#x5B57;&#x4E2D;&#x542B;&#x6709;&quot;&#x98CE;&quot;&#x5B57;&#x7684;&#x5B66;&#x751F;&#x4FE1;&#x606F;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student
-<span class="token keyword">where</span> s_name like <span class="token string">&apos;%&#x98CE;%&apos;</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-d9c128c15423867f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/214/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%BB%93%E6%9E%9C%E6%8C%89%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E9%99%8D%E5%BA%8F%E6%8E%92%E5%88%97%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E7%9B%B8%E5%90%8C%E6%97%B6%E6%8C%89%E8%AF%BE%E7%A8%8B%E7%BC%96%E5%8F%B7">&#x67E5;&#x8BE2;&#x6BCF;&#x95E8;&#x8BFE;&#x7A0B;&#x7684;&#x5E73;&#x5747;&#x6210;&#x7EE9;&#xFF0C;&#x7ED3;&#x679C;&#x6309;&#x5E73;&#x5747;&#x6210;&#x7EE9;&#x964D;&#x5E8F;&#x6392;&#x5217;&#xFF0C;&#x5E73;&#x5747;&#x6210;&#x7EE9;&#x76F8;&#x540C;&#x65F6;&#xFF0C;&#x6309;&#x8BFE;&#x7A0B;&#x7F16;&#x53F7;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> c_id<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>score<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">&apos;&#x5E73;&#x5747;&#x6210;&#x7EE9;&apos;</span>
-<span class="token keyword">from</span> score <span class="token keyword">group</span> by c_id
-order by &#x5E73;&#x5747;&#x6210;&#x7EE9; desc<span class="token punctuation">,</span>c_id<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-fe4e9eb9fd6cbe2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/158/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E8%AF%BE%E7%A8%8B%E5%90%8D%E7%A7%B0%E4%B8%BA%E6%95%B0%E5%AD%A6%E4%B8%94%E5%88%86%E6%95%B0%E4%BD%8E%E4%BA%8E60%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E5%88%86%E6%95%B0">&#x67E5;&#x8BE2;&#x8BFE;&#x7A0B;&#x540D;&#x79F0;&#x4E3A;&quot;&#x6570;&#x5B66;&quot;&#xFF0C;&#x4E14;&#x5206;&#x6570;&#x4F4E;&#x4E8E;60&#x7684;&#x5B66;&#x751F;&#x59D3;&#x540D;&#x548C;&#x5206;&#x6570;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> s_name<span class="token punctuation">,</span>c_name<span class="token punctuation">,</span>score <span class="token keyword">from</span> total
-<span class="token keyword">where</span> c_name<span class="token operator">=</span><span class="token string">&apos;&#x6570;&#x5B66;&apos;</span> and score<span class="token operator">&lt;</span><span class="token number">60</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-934046910f8ad8d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/158/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E4%B8%8D%E5%8F%8A%E6%A0%BC%E7%9A%84%E8%AF%BE%E7%A8%8B">&#x67E5;&#x8BE2;&#x4E0D;&#x53CA;&#x683C;&#x7684;&#x8BFE;&#x7A0B;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> score<span class="token punctuation">.</span>c_id<span class="token punctuation">,</span>course<span class="token punctuation">.</span>c_name<span class="token punctuation">,</span>score
-<span class="token keyword">from</span> score left <span class="token keyword">join</span> course
-on score<span class="token punctuation">.</span>c_id<span class="token operator">=</span>course<span class="token punctuation">.</span>c_id
-<span class="token keyword">where</span> score<span class="token operator">&lt;</span><span class="token number">60</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-e99118458efdaa1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/145/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E4%B8%8D%E5%90%8C%E8%AF%BE%E7%A8%8B%E6%88%90%E7%BB%A9%E7%9B%B8%E5%90%8C%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E7%94%9F%E7%BC%96%E5%8F%B7-%E8%AF%BE%E7%A8%8B%E7%BC%96%E5%8F%B7-%E5%AD%A6%E7%94%9F%E6%88%90%E7%BB%A9">&#x67E5;&#x8BE2;&#x4E0D;&#x540C;&#x8BFE;&#x7A0B;&#x6210;&#x7EE9;&#x76F8;&#x540C;&#x7684;&#x5B66;&#x751F;&#x7684;&#x5B66;&#x751F;&#x7F16;&#x53F7;&#x3001;&#x8BFE;&#x7A0B;&#x7F16;&#x53F7;&#x3001;&#x5B66;&#x751F;&#x6210;&#x7EE9;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> a<span class="token punctuation">.</span>s_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>c_id<span class="token punctuation">,</span>a<span class="token punctuation">.</span>score
-<span class="token keyword">from</span> score a<span class="token punctuation">,</span>score b
-<span class="token keyword">where</span> a<span class="token punctuation">.</span>c_id<span class="token operator">=</span>b<span class="token punctuation">.</span>c_id and a<span class="token punctuation">.</span>s_id<span class="token operator">&lt;</span><span class="token operator">&gt;</span>b<span class="token punctuation">.</span>s_id and a<span class="token punctuation">.</span>score<span class="token operator">=</span>b<span class="token punctuation">.</span>score<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-42d268e6266c6a2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/133/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E6%AF%8F%E9%97%A8%E5%8A%9F%E6%88%90%E7%BB%A9%E6%9C%80%E5%A5%BD%E7%9A%84%E5%89%8D%E4%B8%A4%E5%90%8D">&#x67E5;&#x8BE2;&#x6BCF;&#x95E8;&#x529F;&#x6210;&#x7EE9;&#x6700;&#x597D;&#x7684;&#x524D;&#x4E24;&#x540D;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token punctuation">(</span><span class="token keyword">select</span> c_id<span class="token punctuation">,</span>s_id <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;01&apos;</span> order by score limit <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token function">union</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> c_id<span class="token punctuation">,</span>s_id <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;02&apos;</span> order by score limit <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token function">union</span>
-<span class="token punctuation">(</span><span class="token keyword">select</span> c_id<span class="token punctuation">,</span>s_id <span class="token keyword">from</span> score <span class="token keyword">where</span> c_id<span class="token operator">=</span><span class="token string">&apos;03&apos;</span> order by score limit <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-36b5541d815bd9bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/86/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%A3%80%E7%B4%A2%E8%87%B3%E5%B0%91%E9%80%89%E4%BF%AE%E4%B8%A4%E9%97%A8%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%AD%A6%E5%8F%B7">&#x68C0;&#x7D22;&#x81F3;&#x5C11;&#x9009;&#x4FEE;&#x4E24;&#x95E8;&#x8BFE;&#x7A0B;&#x7684;&#x5B66;&#x751F;&#x5B66;&#x53F7;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> s_id <span class="token keyword">from</span> score <span class="token keyword">group</span> by s_id having <span class="token function">count</span><span class="token punctuation">(</span>c_id<span class="token punctuation">)</span><span class="token operator">&gt;=</span><span class="token number">2</span><span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-64fbd2a9cd6c40d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/43/format/webp" alt="img"></p>
 <h1 class="mume-header" id="%E6%9F%A5%E8%AF%A2%E5%90%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%B9%B4%E9%BE%84">&#x67E5;&#x8BE2;&#x5404;&#x5B66;&#x751F;&#x7684;&#x5E74;&#x9F84;</h1>
 
-<pre data-role="codeBlock" data-info="csharp" class="language-csharp"><span class="token keyword">select</span> s_id<span class="token punctuation">,</span>s_name<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token function">year</span><span class="token punctuation">(</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token function">year</span><span class="token punctuation">(</span>s_age<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token string">&apos;&#x5E74;&#x9F84;&apos;</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
-</pre><p><img src="https:////upload-images.jianshu.io/upload_images/18317213-c5be3ad0039a3f9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/138/format/webp" alt="img"></p>
 
       </div>
       
