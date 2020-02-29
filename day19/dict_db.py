@@ -44,3 +44,25 @@ class Database:
             except:
                 self.db.rollback()
                 return False
+
+    # 处理登录
+    def login(self,name,passwd):
+        sql = "select name from user where name=%s and passwd=%s;"
+        self.cur.execute(sql,[name,passwd])
+        r = self.cur.fetchone()
+        if r:
+            return True
+        else:
+            return False
+
+
+    # 查询单词
+    def query(self,word):
+        sql = "select mean from words where word=%s;"
+        self.cur.execute(sql,[word])
+        r = self.cur.fetchone() # 也有可能查不到
+
+        if r:
+            return r[0] # 将单词解释返回
+        else:
+            return "没有找到该单词"

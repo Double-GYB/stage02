@@ -25,6 +25,19 @@ def do_register(connfd,name,passwd):
     else:
         connfd.send(b'FAIL')
 
+# 处理登录请求
+def do_login(connfd,name,passwd):
+    if db.login(name, passwd):
+        connfd.send(b'OK')
+    else:
+        connfd.send(b'FAIL')
+
+# 处理单词查询
+def do_query(connfd,word):
+    mean = db.query(word)
+    msg = "%s : %s"%(word,mean)
+    connfd.send(msg.encode())
+
 
 # 处理客户端请求
 def handle(connfd):
@@ -32,12 +45,18 @@ def handle(connfd):
     while True:
         data = connfd.recv(1024).decode()  # 接收请求
         tmp = data.split(' ')
-        if tmp[0] == 'R':
+        if not tmp or tmp[0] == 'E':
+            connfd.close()
+            return
+        elif tmp[0] == 'R':
             # "R name password"
             do_register(connfd,tmp[1],tmp[2])
         elif tmp[0] == 'L':
             # "L name password"
             do_login(connfd,tmp[1],tmp[2])
+        elif tmp[0] == 'Q':
+            # "Q word"
+            do_query(connfd,tmp[1])
 
 # 创建多进程并发模型
 def main():
