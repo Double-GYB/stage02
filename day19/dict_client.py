@@ -50,7 +50,7 @@ def main():
         if cmd == '1':
             do_register(s)
         elif cmd == '2':
-            pass
+            do_login(s)
         elif cmd == '3':
             break
 

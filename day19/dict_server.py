@@ -35,6 +35,9 @@ def handle(connfd):
         if tmp[0] == 'R':
             # "R name password"
             do_register(connfd,tmp[1],tmp[2])
+        elif tmp[0] == 'L':
+            # "L name password"
+            do_login(connfd,tmp[1],tmp[2])
 
 # 创建多进程并发模型
 def main():
