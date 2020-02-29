@@ -33,8 +33,11 @@ def do_login(connfd,name,passwd):
         connfd.send(b'FAIL')
 
 # 处理单词查询
-def do_query(connfd,word):
-    mean = db.query(word)
+def do_query(connfd,name,word):
+
+    db.insert_history(name,word)  # 插入历史记录
+
+    mean = db.query(word)  # 查单词
     msg = "%s : %s"%(word,mean)
     connfd.send(msg.encode())
 
@@ -55,8 +58,8 @@ def handle(connfd):
             # "L name password"
             do_login(connfd,tmp[1],tmp[2])
         elif tmp[0] == 'Q':
-            # "Q word"
-            do_query(connfd,tmp[1])
+            # "Q name word"
+            do_query(connfd,tmp[1],tmp[2])
 
 # 创建多进程并发模型
 def main():

@@ -7,30 +7,32 @@ import sys
 # 全局变量 服务器地址
 ADDR = ('127.0.0.1',8000)
 
-def do_query(s):
+def do_query(s,name):
     while True:
         word = input("单词:")
         if word == "##":
             break
-        msg = "Q " + word
+        msg = "Q %s %s"%(name,word)
         s.send(msg.encode()) # 发送请求
         # 无论是否查到单词都进行打印
         data = s.recv(1024).decode()
         print(data)
 
+# 历史记录
+def do_hist(s,name):
+    pass
 
 # 二级界面
-def second(s):
+def second(s,name):
     while True:
         print("===============Query===============")
         print("1. 查单词    2. 历史记录   3.注销")
         print("===================================")
         cmd = input("输入命令：")
         if cmd == '1':
-            do_query(s)
+            do_query(s,name)
         elif cmd == '2':
-            pass
-            # do_hist()
+            do_hist(s,name)
         elif cmd == '3':
             return
 
@@ -58,7 +60,7 @@ def do_login(s):
     data = s.recv(128).decode()  # 等待结果
     if data == 'OK':
         print("登录成功")
-        second(s)
+        second(s,name)
     else:
         print("登录失败")
 

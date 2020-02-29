@@ -55,7 +55,6 @@ class Database:
         else:
             return False
 
-
     # 查询单词
     def query(self,word):
         sql = "select mean from words where word=%s;"
@@ -66,3 +65,12 @@ class Database:
             return r[0] # 将单词解释返回
         else:
             return "没有找到该单词"
+
+    # 插入历史记录
+    def insert_history(self,name,word):
+        sql = "insert into hist (name,word) values (%s,%s);"
+        try:
+            self.cur.execute(sql,[name,word])
+            self.db.commit()
+        except:
+            self.db.rollback()
