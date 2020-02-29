@@ -23,6 +23,18 @@ def second():
             break
 
 
+# 注册功能
+def do_register(s):
+    name = input("Name:")
+    passwd = input('Password:')
+    # 发送请求
+    msg = "R %s %s"%(name,passwd)
+    s.send(msg.encode())
+    data = s.recv(128).decode()  # 等待结果
+    if data == 'OK':
+        print("注册成功")
+    else:
+        print("注册失败")
 
 # 链接服务器
 def main():
@@ -36,7 +48,7 @@ def main():
         print("==================================")
         cmd = input("输入命令：")
         if cmd == '1':
-            s.send(cmd.encode())
+            do_register(s)
         elif cmd == '2':
             pass
         elif cmd == '3':
