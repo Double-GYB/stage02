@@ -50,6 +50,7 @@ def handle(connfd):
         tmp = data.split(' ')
         if not tmp or tmp[0] == 'E':
             connfd.close()
+            db.cur.close()
             return
         elif tmp[0] == 'R':
             # "R name password"
@@ -80,6 +81,7 @@ def main():
         # 为每个客户端创建进程
         p = Process(target=handle,args=(c,))
         p.start()
+
 
 
 if __name__ == '__main__':
