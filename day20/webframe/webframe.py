@@ -10,6 +10,7 @@ from socket import *
 import json
 from threading import Thread
 from settings import *  # 配置文件
+from urls import *
 
 ADDR = (frame_ip,frame_port) # webframe地址
 
@@ -50,10 +51,10 @@ class Application:
         if request['method'] == 'GET':
             # 表示判定为请求一个网页
             if request['info'] == '/' or request['info'][-5:] == '.html':
-                response = get_html(request['info'])
+                response = self.get_html(request['info'])
             else:
                 # 请求非网页内容
-                response = {"status":'404','data':'xxxxx'}
+                response = self.get_data(request['info'])
 
         elif request['method'] == 'POST':
             pass
@@ -64,7 +65,26 @@ class Application:
 
     # 处理网页
     def get_html(self,info):
-        pass
+        if info == '/':
+            filename = dir + "/index.html"
+        else:
+            filename = dir + info
+
+        try:
+            f = open(filename)  # 企图打开目标网页
+        except :
+            fd = open(dir+"/404.html")
+            return {'status':'404','data':fd.read()}
+        else:
+            return {'status': '200', 'data': f.read()}
+
+    # 处理非网页情形
+    def get_data(self,info):
+        for url,func in urls:
+            if url == info:
+                return {'status':'200','data':func()}
+        return {'status': '404', 'data': "Sorry...."}
+
 
 app = Application()
 app.start()
