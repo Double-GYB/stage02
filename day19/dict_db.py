@@ -74,3 +74,20 @@ class Database:
             self.db.commit()
         except:
             self.db.rollback()
+
+    #  提供历史记录
+    def history(self,name):
+        sql = "select name,word,time from hist where name=%s order by time desc limit 10;"
+        self.cur.execute(sql,[name])
+        return self.cur.fetchall()  # 没有查询到内容（）    查询到了 （（），（），（）。。。）
+
+
+
+
+
+
+
+
+
+
+

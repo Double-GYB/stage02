@@ -20,7 +20,18 @@ def do_query(s,name):
 
 # 历史记录
 def do_hist(s,name):
-    pass
+    msg = "H "+name
+    s.send(msg.encode())
+    data = s.recv(128).decode()  # 判断该用户是否有历史记录
+    if data == 'OK':
+        # 接收历史记录
+        while True:
+            data = s.recv(1024).decode()
+            if data == '##':
+                break
+            print(data)
+    else:
+        print("您还没有查询记录")
 
 # 二级界面
 def second(s,name):
@@ -35,7 +46,6 @@ def second(s,name):
             do_hist(s,name)
         elif cmd == '3':
             return
-
 
 # 注册功能
 def do_register(s):
