@@ -26,7 +26,7 @@ def connect_frame(env):
     try:
         # 将请求字典转换为json格式发送
         data = json.dumps(env)
-        s.send(env.encode())
+        s.send(data.encode())
         # 等待数据
         data = s.recv(1024 * 1024 * 10).decode()
         return json.loads(data) # 转换为字典返回
