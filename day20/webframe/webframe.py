@@ -78,6 +78,8 @@ class Application:
         else:
             return {'status': '200', 'data': f.read()}
 
+
+
     # 处理非网页情形
     def get_data(self,info):
         for url,func in urls:
